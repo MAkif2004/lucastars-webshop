@@ -1,0 +1,16 @@
+variables:
+    DEPLOY_HIC: "false"
+    DEPLOY_PAGES: "true"
+
+workflow:
+    auto_cancel:
+        on_new_commit: interruptible
+
+stages:
+    - build
+    - deploy
+
+include:
+    - ".gitlab-ci.build.yml"
+    - ".gitlab-ci.deploy-hic.yml"
+    - ".gitlab-ci.deploy-pages.yml"

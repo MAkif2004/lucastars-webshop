@@ -1,0 +1,53 @@
+build:
+    stage: build
+    when: always
+    image: node:20
+    tags:
+        - hva
+    # Make sure this job can be canceled
+    interruptible: true
+    cache:
+        key:
+            files:
+                - package-lock.json
+            prefix: npm
+        paths:
+            - node_modules/
+    before_script:
+        - cd src/api
+        # Copy the .env.example file to .env
+        - cp .env.example .env
+        # Set the environment variables for the database so that API can connect to it
+        - sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_DATABASE/" .env
+        - sed -i "s/DB_USER=.*/DB_USER=$DB_USER/" .env
+        - sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" .env
+        - cd ../../
+    script:
+        - npm install
+        # Build the documentation site
+        - npm run typedoc
+        # Build the backend application
+        - cd src/api
+        - npm run test
+        - npm run build
+        # Build the frontend application
+        - cd ../web
+        - npm run test
+        - npm run build
+    artifacts:
+        paths:
+            - dist
+        reports:
+            junit: dist/junit-*.xml
+            coverage_report:
+                coverage_format: cobertura
+                path: dist/*-coverage/cobertura-coverage.xml
+    rules:
+        # Always build for merge requests
+        - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+        # Auto-deploy HBO-ICT.Cloud if the the default or "dev" branch is used
+        - if: ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == "dev" ) && $DEPLOY_HIC == "true"
+        # Auto-deploy GitLab Pages if the default branch is used
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_PAGES == "true"
+        # Otherwise allow manual deployment
+        - when: manual

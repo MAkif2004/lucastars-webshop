@@ -1,0 +1,40 @@
+deploy-hic:
+    stage: deploy
+    when: always
+    tags:
+        - hva
+    # Make sure older jobs are finished/canceled first
+    resource_group: deploy-hic
+    before_script:
+        - apk update
+        - apk add openssh
+        - apk add lftp
+        - apk add wget
+    script:
+        # Transfer all files
+        - lftp -e "
+          set net:max-retries 3;
+          set ssl:verify-certificate no;
+          set ftp:ssl-allow yes;
+          set sftp:auto-confirm yes;
+          open -u $HIC_SFTP_USERNAME,$HIC_SFTP_PASSWORD $HIC_SFTP_HOST;
+          mirror --transfer-all -Rv dist/api/. ./$HIC_ENVIRONMENT/app/ --ignore-time --parallel=10;
+          mirror --transfer-all -Rv dist/web/. ./$HIC_ENVIRONMENT/wwwroot/ --ignore-time --parallel=10;"
+        # Restart the environment
+        - 'wget --header="Authorization: $HIC_API_KEY" $HIC_API_URL/$HIC_ENVIRONMENT/Restart'
+    rules:
+        # Disable deployment for merge requests
+        - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+          when: never
+        # Auto-deploy HBO-ICT.Cloud if the the default branch is used
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_HIC == "true"
+          variables:
+              HIC_ENVIRONMENT: "live"
+        # Auto-deploy HBO-ICT.Cloud if the the "dev" branch is used
+        - if: $CI_COMMIT_BRANCH == "dev" && $DEPLOY_HIC == "true"
+          variables:
+              HIC_ENVIRONMENT: "dev"
+        # Otherwise allow manual deployment
+        - when: manual
+          variables:
+              HIC_ENVIRONMENT: "dev"

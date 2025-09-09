@@ -1,0 +1,41 @@
+{
+    "name": "@webshop/api",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "esbuild-scripts watch",
+        "build": "esbuild-scripts build",
+        "preview": "node ../../dist/api/index.js",
+        "test": "vitest --run --coverage",
+        "test:watch": "vitest",
+        "test:watch-with-coverage": "vitest --coverage",
+        "test:ui": "vitest --coverage --ui",
+        "seed": "tsx src/seeders/index.ts",
+        "seed:dev": "tsx src/seeders/index.ts --dev"
+    },
+    "dependencies": {
+        "bcrypt-ts": "^6.0.0",
+        "cookie-parser": "1.4.7",
+        "cors": "2.8.5",
+        "dotenv": "16.4.7",
+        "express": "4.21.2",
+        "express-async-errors": "3.1.1",
+        "mysql2": "3.14.0",
+        "uuid": "^11.1.0"
+    },
+    "devDependencies": {
+        "@faker-js/faker": "^9.7.0",
+        "@hboictcloud/esbuild-plugin-interfaces": "^1.x",
+        "@hboictcloud/esbuild-plugin-typechecks": "^1.x",
+        "@hboictcloud/esbuild-scripts": "^1.x",
+        "@hboictcloud/scanner": "^1.x",
+        "@types/cookie-parser": "1.4.8",
+        "@types/cors": "2.8.17",
+        "@types/express": "4.17.21",
+        "@types/supertest": "6.0.3",
+        "@types/uuid": "^10.0.0",
+        "esbuild": "0.25.2",
+        "supertest": "7.1.0",
+        "tsx": "^4.19.3"
+    }
+}

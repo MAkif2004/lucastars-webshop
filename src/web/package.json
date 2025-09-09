@@ -1,0 +1,25 @@
+{
+    "name": "@webshop/web",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "test": "vitest --run --coverage",
+        "test:watch": "vitest",
+        "test:watch-with-coverage": "vitest --coverage",
+        "test:ui": "vitest --coverage --ui"
+    },
+    "devDependencies": {
+        "@hboictcloud/vite-plugin-typechecks": "^1.x",
+        "@testing-library/dom": "10.4.0",
+        "@testing-library/user-event": "14.6.1",
+        "glob": "11.0.1",
+        "jsdom": "26.0.0"
+    },
+    "dependencies": {
+        "toolcool-range-slider": "^4.0.28"
+    }
+}

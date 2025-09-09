@@ -1,0 +1,4 @@
+/* Mermaid blocks should always be a white background for readability purposes */ 
+[data-theme="dark"] pre:has(.mermaid) {
+    --code-background: white;
+}

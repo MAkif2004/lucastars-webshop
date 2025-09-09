@@ -1,0 +1,37 @@
+{
+    "name": "@webshop/root",
+    "version": "1.0.0",
+    "private": true,
+    "engines": {
+        "node": "20"
+    },
+    "workspaces": [
+        "src/*"
+    ],
+    "scripts": {
+        "typedoc": "npx typedoc"
+    },
+    "devDependencies": {
+        "@hboictcloud/eslint-plugin": "^2.x",
+        "@hboictcloud/eslint-plugin-webshop": "^1.x",
+        "@hboictcloud/metadata": "^1.x",
+        "@types/node": "^20.x",
+        "@vitest/coverage-istanbul": "3.1.1",
+        "@vitest/ui": "3.1.1",
+        "eslint": "9.24.0",
+        "node-mocks-http": "1.16.2",
+        "typedoc": "0.28.1",
+        "typescript": "5.7.3",
+        "vite": "6.2.5",
+        "vite-tsconfig-paths": "5.1.4",
+        "vitest": "3.1.1",
+        "vitest-fetch-mock": "0.4.5",
+        "vitest-mock-extended": "3.1.0"
+    },
+    "comments": {
+        "typescript": "Set to 5.7.3 because vite 6.2.5 doesn't officially support it yet!"
+    },
+    "overrides": {
+        "minimatch": "10.0.1"
+    }
+}

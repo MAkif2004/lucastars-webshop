@@ -1,0 +1,28 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": ["./src/api/src", "./src/shared", "./src/web/src"],
+    "entryPointStrategy": "expand",
+    "projectDocuments": ["./docs/index.md"],
+    "out": "./dist/docs",
+    "searchInDocuments": true,
+    "searchInComments": true,
+    "includeVersion": true,
+    "validation": true,
+    "readme": "none",
+    "excludePrivate": false,
+    "visibilityFilters": {
+        "private": true,
+        "protected": true,
+        "inherited": true
+    },
+    "exclude": [
+        "**/node_modules/**",
+    ],
+    "navigationLinks": {
+        "HBO-ICT Knowledgebase": "https://knowledgebase.hbo-ict-hva.nl/3_onderwijs/se/opdracht4/",
+        "HBO-ICT.Cloud": "https://hbo-ict.cloud/"
+    },
+    "ignoredHighlightLanguages": ["mermaid"],
+    "customCss": "./docs/.typedoc/custom.css",
+    "customJs": "./docs/.typedoc/custom.js"
+}
